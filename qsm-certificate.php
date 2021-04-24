@@ -108,7 +108,7 @@ class QSM_Certificate {
             $firstname = get_user_meta( $current_user->ID, 'first_name', true );
             $lastname = get_user_meta( $current_user->ID, 'last_name', true );
             if(!empty($firstname) && !empty($lastname))
-                    $full_name =  $firstname." ".$lastname;
+                    $full_name =  $lastname." ".$firstname;
             else
                     $full_name = $current_user->display_name;
             $content = str_replace("%FULL_NAME%", (isset($full_name) ? $full_name : ''), $content);
