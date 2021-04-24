@@ -89,6 +89,8 @@ class QSM_Certificate {
       add_filter( 'qsm_addon_certificate_content_filter', 'mlw_qmn_variable_date', 10, 2 );
       add_filter( 'qsm_addon_certificate_content_filter', 'mlw_qmn_variable_date_taken', 10, 2 );
       add_filter( 'qsm_addon_certificate_content_filter', array($this, 'mlw_certificate_user_full_name'), 10, 2 );
+      add_filter( 'qsm_addon_certificate_content_filter', array($this, 'mlw_certificate_user_first_name'), 10, 2 );
+      add_filter( 'qsm_addon_certificate_content_filter', array($this, 'mlw_certificate_user_last_name'), 10, 2 );
       add_filter('upload_mimes', array($this, 'add_ttf_upload_mimes'));
     }
     
@@ -112,6 +114,40 @@ class QSM_Certificate {
             $content = str_replace("%FULL_NAME%", (isset($full_name) ? $full_name : ''), $content);
         }
         return $content;
+    }
+
+    /**
+     * Display first name of user using %FIRST_NAME%.
+     * 
+     * @since 1.0.10
+     * @param string $content
+     * @param Arr $mlw_quiz_array
+     * @return type
+     */
+    public function mlw_certificate_user_first_name($content, $mlw_quiz_array){
+      if (false !== strpos($content, '%FIRST_NAME%')) { 
+          $current_user = wp_get_current_user(); 
+          $firstname = get_user_meta( $current_user->ID, 'first_name', true );
+          $content = str_replace("%FIRST_NAME%", (isset($firstname) ? $firstname : ''), $content);
+      }
+      return $content;
+    }
+
+    /**
+     * Display last name of user using %LAST_NAME%.
+     * 
+     * @since 1.0.10
+     * @param string $content
+     * @param Arr $mlw_quiz_array
+     * @return type
+     */
+    public function mlw_certificate_user_last_name($content, $mlw_quiz_array){
+      if (false !== strpos($content, '%LAST_NAME%')) { 
+          $current_user = wp_get_current_user(); 
+          $lastname = get_user_meta( $current_user->ID, 'last_name', true );
+          $content = str_replace("%LAST_NAME%", (isset($lastname) ? $lastname : ''), $content);
+      }
+      return $content;
     }
     
     /**
