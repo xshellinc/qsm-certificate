@@ -32,8 +32,8 @@ function qsm_addon_certificate_variable( $content, $quiz_array ) {
   }
   $certificate_defaults = array(
     'enabled' => 1,
-    'title' => 'Enter your title',
-    'content' => 'Enter your content',
+    'title' => __('Enter your title', 'qsm-certificate'),
+    'content' => __('Enter your content', 'qsm-certificate'),
     'logo' => '',
     'background' => ''
   );
@@ -50,10 +50,10 @@ function qsm_addon_certificate_variable( $content, $quiz_array ) {
 
   		// Checks if the file was created
       if ( ! empty( $certificate_file ) && false !== $certificate_file ) {
-
+        $upload = wp_upload_dir();
         // Prepares url and link to certificate
-        $certificate_url = plugin_dir_url( __FILE__ ) . "../certificates/$certificate_file";
-        $certificate_link = "<a target='_blank' href='$certificate_url' class='qmn_certificate_link'>Download Certificate</a>";
+        $certificate_url = $upload['baseurl']."/qsm-certificates/$certificate_file";
+        $certificate_link = "<a target='_blank' href='$certificate_url' class='qmn_certificate_link'>". __('Download Certificate', 'qsm-certificate') ."</a>";
 
         // Replaces variable with link
         $content = str_replace( '%CERTIFICATE_LINK%', $certificate_link, $content );
